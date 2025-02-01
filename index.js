@@ -2,10 +2,7 @@ const express = require("express");
 const { connectDb } = require("./config/connectDb");
 const dotenv = require("dotenv");
 const cors = require("cors");
-<<<<<<< HEAD
-=======
 const cookieParser = require("cookie-parser");
->>>>>>> new_feature
 
 const app = express();
 const policyHolderRoute = require("./route/policyHolderRoute");
@@ -13,10 +10,6 @@ const policyRoute = require("./route/policyRoute");
 const claimRoute = require("./route/claimRoute");
 dotenv.config();
 app.use(cors());
-<<<<<<< HEAD
-
-=======
->>>>>>> new_feature
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
