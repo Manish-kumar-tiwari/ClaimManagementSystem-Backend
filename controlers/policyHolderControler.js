@@ -1,6 +1,6 @@
 const policyHolder = require("../models/policyHolderModels");
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 const createPolicyHolder = async (req, res) => {
   try {
