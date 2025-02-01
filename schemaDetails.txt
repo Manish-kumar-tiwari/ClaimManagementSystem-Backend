@@ -1,0 +1,97 @@
+// 1. Policyholder Schema
+const Policyholder = {
+  id: { type: String, unique: true, required: true },
+  firstName: { type: String, required: true },
+  lastName: { type: String, required: true },
+  email: { type: String, unique: true, required: true },
+  phoneNumber: { type: String, optional: true },
+  address: { type: String, optional: true },
+  dateOfBirth: { type: Date, optional: true },
+  createdAt: { type: Date },
+  updatedAt: { type: Date },
+};
+
+// 2. Policy Schema
+const Policy = {
+  id: { type: String, unique: true, required: true },
+  policyholderId: { type: String, required: true }, // Foreign Key to Policyholder
+  policyType: { type: String, required: true },
+  policyNumber: { type: String, unique: true, required: true },
+  coverageAmount: { type: Decimal, required: true },
+  premiumAmount: { type: Decimal, required: true },
+  startDate: { type: Date, required: true },
+  endDate: { type: Date, required: true },
+  status: { type: String, required: true },
+  createdAt: { type: Date },
+  updatedAt: { type: Date },
+};
+
+// 3. Claim Schema
+const Claim = {
+  id: { type: String, unique: true, required: true },
+  policyId: { type: String, required: true }, // Foreign Key to Policy
+  policyholderId: { type: String, required: true }, // Foreign Key to Policyholder
+  claimAmount: { type: Decimal, required: true },
+  claimType: { type: String, required: true },
+  claimDate: { type: Date, required: true },
+  status: { type: String, required: true },
+  description: { type: String, optional: true },
+  createdAt: { type: Date },
+  updatedAt: { type: Date },
+};
+
+// 4. Audit Log Schema
+const AuditLog = {
+  id: { type: String, unique: true, required: true },
+  action: { type: String, required: true },
+  entityType: { type: String, required: true },
+  entityId: { type: String, required: true },
+  userId: { type: String, required: true },
+  timestamp: { type: Date, required: true },
+  details: { type: String, optional: true },
+};
+
+// 5. Transaction Schema
+const Transaction = {
+  id: { type: String, unique: true, required: true },
+  claimId: { type: String, required: true }, // Foreign Key to Claim
+  policyId: { type: String, required: true }, // Foreign Key to Policy
+  transactionAmount: { type: Decimal, required: true },
+  transactionDate: { type: Date, required: true },
+  transactionType: { type: String, required: true },
+  status: { type: String, required: true },
+  createdAt: { type: Date },
+};
+
+// 6. Notification Schema
+const Notification = {
+  id: { type: String, unique: true, required: true },
+  userId: { type: String, required: true }, // Foreign Key to User
+  notificationType: { type: String, required: true },
+  message: { type: String, required: true },
+  status: { type: String, required: true },
+  createdAt: { type: Date },
+};
+
+// 7. User Schema
+const User = {
+  id: { type: String, unique: true, required: true },
+  username: { type: String, unique: true, required: true },
+  password: { type: String, required: true },
+  role: { type: String, required: true },
+  email: { type: String, unique: true, required: true },
+  createdAt: { type: Date },
+  updatedAt: { type: Date },
+};
+
+// 8. Payment Schema
+const Payment = {
+  id: { type: String, unique: true, required: true },
+  claimId: { type: String, required: true }, // Foreign Key to Claim
+  policyholderId: { type: String, required: true }, // Foreign Key to Policyholder
+  paymentAmount: { type: Decimal, required: true },
+  paymentDate: { type: Date, required: true },
+  paymentMethod: { type: String, required: true },
+  status: { type: String, required: true },
+  createdAt: { type: Date },
+};
