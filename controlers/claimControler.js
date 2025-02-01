@@ -29,7 +29,7 @@ const createClaimControler = async (req, res) => {
         message: "You can't clam more than policy ammount",
       });
     }
-    
+
     const newClaim = await claim.create({
       policyHolderId: policyData.policyHolderId,
       policyId,
@@ -39,8 +39,6 @@ const createClaimControler = async (req, res) => {
       claimType,
       claimStatus,
     });
-
-    
 
     res.status(201).send({
       success: true,
@@ -100,14 +98,13 @@ const updateClaimControler = async (req, res) => {
     }
 
     const claimData = await claim.findById(claimId);
-    const policydata = await policy.findById(claimData.policyId);
-
     if (!claimData) {
       return res.status(404).json({
         success: false,
         message: "Claim not found",
       });
     }
+    const policydata = await policy.findById(claimData.policyId);
 
     if (policydata.policyAmount < claimAmount) {
       return res.status(400).send({
