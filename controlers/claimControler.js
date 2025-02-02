@@ -1,5 +1,6 @@
 const policy = require("../models/policyModels");
 const claim = require("../models/claimModels");
+
 const createClaimControler = async (req, res) => {
   try {
     const policyId = req.params.id;
@@ -24,9 +25,18 @@ const createClaimControler = async (req, res) => {
     }
 
     if (policyData.policyHolderId.toString() !== req.policyHolderId) {
-      return res.status(400).send({
+      return res.status(401).send({
         success: false,
         message: "Policy Id not valid for you",
+      });
+    }
+
+    const claimData = await claim.find({ policyId });
+
+    if (claimData.length !== 0) {
+      return res.status(400).send({
+        success: false,
+        message: "Claim alreay Exists",
       });
     }
 

@@ -29,7 +29,6 @@ const policySchema = new mongoose.Schema(
       required: true,
     },
 
-
     policyPremium: {
       type: Number,
       required: true,
@@ -45,11 +44,16 @@ const policySchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    
+
     policyHolderNomineeRelation: {
       type: String,
       required: true,
     },
+
+    // claimRecord: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "Claim",
+    // },
   },
   { timestamps: true }
 );
