@@ -37,7 +37,7 @@ const policyHolderSchema = new mongoose.Schema(
     policy: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "claim",
+        ref: "policy",
       },
     ],
   },

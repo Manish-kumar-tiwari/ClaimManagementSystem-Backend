@@ -81,8 +81,16 @@ const getPolicyControler = async (req, res) => {
       });
     }
 
-    const policyData = await policy.findById(policyId);
+    const policyHolderData = await policyHolder.findById(req.policyHolderId);
 
+    if (!policyHolderData.policy.includes(policyId)) {
+      return res.status(400).send({
+        success: false,
+        message: "Invalid credential",
+      });
+    }
+
+    const policyData = await policy.findById(policyId);
     if (!policyData) {
       return res.status(404).json({
         success: false,
@@ -99,9 +107,32 @@ const getPolicyControler = async (req, res) => {
     console.log("Error in getting policy ", error);
     res.status(500).json({
       success: false,
-      message: "Internal server error",
+      message: "Internal server in get policy error",
     });
   }
 };
 
-module.exports = { createPolicyControler, getPolicyControler };
+const getAllPolicy = async (req, res) => {
+  try {
+    const policyHolderId = req.policyHolderId;
+
+    const allPolicy = await policyHolder
+      .findById(policyHolderId)
+      .select("policy")
+      .populate("policy");
+
+    res.status(200).send({
+      success: true,
+      message: "All polices",
+      data: allPolicy.policy,
+    });
+  } catch (error) {
+    console.log("Error in getting all policy ", error);
+    res.status(500).json({
+      success: false,
+      message: "Internal server in get all policy error",
+    });
+  }
+};
+
+module.exports = { createPolicyControler, getPolicyControler, getAllPolicy };

@@ -23,6 +23,13 @@ const createClaimControler = async (req, res) => {
       });
     }
 
+    if (policyData.policyHolderId.toString() !== req.policyHolderId) {
+      return res.status(400).send({
+        success: false,
+        message: "Policy Id not valid for you",
+      });
+    }
+
     if (policyData.policyAmount < claimAmount) {
       return res.status(400).send({
         success: false,
@@ -104,6 +111,14 @@ const updateClaimControler = async (req, res) => {
         message: "Claim not found",
       });
     }
+
+    if (claimData.policyHolderId.toString() !== req.policyHolderId) {
+      return res.status(401).send({
+        success: false,
+        message: "You are not the authorize user to update this clam",
+      });
+    }
+
     const policydata = await policy.findById(claimData.policyId);
 
     if (policydata.policyAmount < claimAmount) {
@@ -133,7 +148,6 @@ const updateClaimControler = async (req, res) => {
 
 const deleteClaimControler = async (req, res) => {
   try {
-    // I will add authantication here to delete the claim by the user who created the claim
     const claimId = req.params.id;
     if (!claimId) {
       return res.status(400).json({
@@ -148,6 +162,13 @@ const deleteClaimControler = async (req, res) => {
       return res.status(404).json({
         success: false,
         message: "Claim not found",
+      });
+    }
+
+    if (claimData.policyHolderId.toString() !== req.policyHolderId) {
+      return res.status(401).send({
+        success: false,
+        message: "You are not the authorize user to detete this clam",
       });
     }
 
