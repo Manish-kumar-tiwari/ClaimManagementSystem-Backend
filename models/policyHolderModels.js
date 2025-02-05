@@ -23,7 +23,7 @@ const policyHolderSchema = new mongoose.Schema(
       required: true,
     },
     policyHolderDOB: {
-      type: Date,
+      type: String,
       required: true,
     },
     policyHolderGender: {

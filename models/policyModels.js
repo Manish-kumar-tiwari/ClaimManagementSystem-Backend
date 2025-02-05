@@ -7,21 +7,18 @@ const policySchema = new mongoose.Schema(
       ref: "policyHolder",
       required: true,
     },
+    image: {
+      type: String,
+      required: true,
+    },
 
     policyType: {
       type: String,
-      enum: ["Life", "Health", "Motor", "Travel"],
       required: true,
     },
 
     policyStartDate: {
       type: Date,
-      required: true,
-    },
-
-    policyEndDate: {
-      type: Date,
-      required: true,
     },
 
     policyAmount: {
@@ -49,11 +46,6 @@ const policySchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-
-    // claimRecord: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   ref: "Claim",
-    // },
   },
   { timestamps: true }
 );

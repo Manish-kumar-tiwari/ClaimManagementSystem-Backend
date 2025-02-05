@@ -17,7 +17,6 @@ const claimSchema = new mongoose.Schema(
     },
     claimType: {
       type: String,
-      enum: ["Life", "Health", "Motor", "Travel"],
       required: true,
     },
     claimAmount: {
@@ -30,7 +29,7 @@ const claimSchema = new mongoose.Schema(
       required: true,
     },
     claimDate: {
-      type: Date,
+      type: String,
     },
   },
   { timestamps: true }

@@ -4,7 +4,7 @@ const claim = require("../models/claimModels");
 const createClaimControler = async (req, res) => {
   try {
     const policyId = req.params.id;
-    const claimDate = new Date();
+    const claimDate = new Date().toLocaleDateString("en-GB");;
     const claimStatus = "Pending";
     const { claimAmount, claimReason, claimType } = req.body;
 
@@ -106,7 +106,9 @@ const getClaimControler = async (req, res) => {
 const updateClaimControler = async (req, res) => {
   try {
     const claimId = req.params.id;
+
     const { claimAmount } = req.body;
+
     if (!claimId || !claimAmount) {
       return res.status(400).json({
         success: false,
@@ -197,9 +199,22 @@ const deleteClaimControler = async (req, res) => {
   }
 };
 
+const getAllClaimControler = async (req, res) => {
+  try {
+    const policyHolderId = req.policyHolderId;
+    const claimData = await claim.find({ policyHolderId });
+    res.status(200).send({
+      claimData,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   createClaimControler,
   getClaimControler,
   updateClaimControler,
   deleteClaimControler,
+  getAllClaimControler,
 };

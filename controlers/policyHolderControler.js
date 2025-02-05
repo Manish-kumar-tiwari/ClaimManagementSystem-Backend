@@ -9,7 +9,7 @@ const createPolicyHolder = async (req, res) => {
       email,
       phone,
       address,
-      dateOfbirth,
+      dateOfBirth,
       country,
       gender,
       password,
@@ -20,7 +20,7 @@ const createPolicyHolder = async (req, res) => {
       !email ||
       !phone ||
       !address ||
-      !dateOfbirth ||
+      !dateOfBirth ||
       !country ||
       !gender ||
       !password
@@ -49,13 +49,14 @@ const createPolicyHolder = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
 
     const hashedPassword = await bcrypt.hash(password, salt);
+    const dob = new Date(dateOfBirth).toLocaleDateString("en-GB");
 
     const policyHolderData = await policyHolder.create({
       policyHolderName: name,
       policyHolderEmail: email,
       policyHolderPhone: phone,
       policyHolderAddress: address,
-      policyHolderDOB: dateOfbirth,
+      policyHolderDOB: dob,
       policyHolderGender: gender,
       country,
       password: hashedPassword,
@@ -134,16 +135,14 @@ const login = async (req, res) => {
       });
     }
 
-    const token = jwt.sign({ id: user._id }, process.env.jwtSecret, {
-      expiresIn: "7d",
-    });
+    const token = jwt.sign({ id: user._id }, process.env.jwtSecret);
 
-    res.cookie("token", token);
+    // res.cookie("token", token);
 
     res.status(200).json({
       success: true,
       message: "Login successfull",
-      data: user,
+      token,
     });
   } catch (error) {
     console.log("Error in login", error);

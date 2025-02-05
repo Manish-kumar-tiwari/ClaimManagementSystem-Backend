@@ -3,12 +3,26 @@ const { connectDb } = require("./config/connectDb");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-
+const swaggerDocument = require("./swagger-output.json");
+const swaggerUi = require("swagger-ui-express");
 const app = express();
 const policyHolderRoute = require("./route/policyHolderRoute");
 const policyRoute = require("./route/policyRoute");
 const claimRoute = require("./route/claimRoute");
 dotenv.config();
+
+const corsOptions = {
+  origin: "http://localhost:5173", // Change this to your frontend URL
+  credentials: true, // Allow cookies & authentication headers
+  methods: "GET,POST,PUT,DELETE,OPTIONS",
+  allowedHeaders: "Content-Type,Authorization",
+};
+
+app.use(cors(corsOptions));
+
+// Serve Swagger docs
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

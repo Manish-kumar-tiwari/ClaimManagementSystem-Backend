@@ -1,3 +1,4 @@
+const policyHolderModels = require("../models/policyHolderModels");
 const policyHolder = require("../models/policyHolderModels");
 const policy = require("../models/policyModels");
 
@@ -14,9 +15,8 @@ const createPolicyControler = async (req, res) => {
     }
 
     const {
+      image,
       policyType,
-      policyStartDate,
-      policyEndDate,
       policyAmount,
       policyPremium,
       policyHolderNominee,
@@ -26,10 +26,9 @@ const createPolicyControler = async (req, res) => {
     const policyStatus = "Pending";
 
     if (
+      !image ||
       !policyHolderId ||
       !policyType ||
-      !policyStartDate ||
-      !policyEndDate ||
       !policyAmount ||
       !policyPremium ||
       !policyStatus ||
@@ -43,10 +42,9 @@ const createPolicyControler = async (req, res) => {
     }
 
     const policyData = await policy.create({
+      image,
       policyHolderId,
       policyType,
-      policyStartDate,
-      policyEndDate,
       policyAmount,
       policyPremium,
       policyStatus,
@@ -115,6 +113,7 @@ const getPolicyControler = async (req, res) => {
 const getAllPolicy = async (req, res) => {
   try {
     const policyHolderId = req.policyHolderId;
+
 
     const allPolicy = await policyHolder
       .findById(policyHolderId)
