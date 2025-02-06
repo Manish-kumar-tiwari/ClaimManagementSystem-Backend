@@ -12,7 +12,7 @@ const claimRoute = require("./route/claimRoute");
 dotenv.config();
 
 const corsOptions = {
-  origin: "http://localhost:5173", // Change this to your frontend URL
+  origin: "*", // Change this to your frontend URL
   credentials: true, // Allow cookies & authentication headers
   methods: "GET,POST,PUT,DELETE,OPTIONS",
   allowedHeaders: "Content-Type,Authorization",
